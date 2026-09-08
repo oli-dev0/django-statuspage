@@ -1,0 +1,26 @@
+{% load i18n %}
+<section class="status-section" aria-labelledby="incident-history-title">
+  <h2 id="incident-history-title">{% trans "Incident history" %}</h2>
+  {% if resolved_incidents %}
+    <div class="incident-list">
+      {% for incident in resolved_incidents %}
+        <article class="incident-card incident-card--history">
+          <div class="incident-card__header">
+            <h3>{{ incident.title }} <time class="incident-card__date" datetime="{{ incident.started_at|date:'c' }}" data-local-datetime="{{ incident.started_at|date:'c' }}" data-local-format="date">{{ incident.started_at|date:"j F Y" }}</time></h3>
+            <div class="status-badges">
+              <span class="status-badge status-badge--severity status-badge--{{ incident.severity }}">{{ incident.get_severity_display }}</span>
+              <span class="status-badge status-badge--phase status-badge--phase-{{ incident.phase }}">{{ incident.get_phase_display }}</span>
+            </div>
+          </div>
+          {% include "status/partials/_incident_services.html" %}
+          {% if incident.summary %}
+            <p>{{ incident.summary }}</p>
+          {% endif %}
+          {% include "status/partials/_incident_timeline.html" with timeline_open=False timeline_compact=True %}
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="status-empty">{% trans "No incidents have been reported yet." %}</p>
+  {% endif %}
+</section>

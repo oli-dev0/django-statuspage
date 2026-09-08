@@ -1,0 +1,22 @@
+{% load i18n %}
+<fieldset class="appearance-toggle" data-status-appearance-toggle aria-label="{% trans 'Color scheme' %}">
+  <label>
+    <input type="radio" name="status-appearance" value="light">
+    <span>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M5 19l1.5-1.5"></path>
+      </svg>
+      <span class="sr-only">{% trans "Light" %}</span>
+    </span>
+  </label>
+  <label>
+    <input type="radio" name="status-appearance" value="dark" checked>
+    <span>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M21 12.5A8.5 8.5 0 1 1 11.5 3A6.5 6.5 0 0 0 21 12.5z"></path>
+      </svg>
+      <span class="sr-only">{% trans "Dark" %}</span>
+    </span>
+  </label>
+</fieldset>

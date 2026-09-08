@@ -1,0 +1,41 @@
+{% load i18n %}
+{% if active_incidents %}
+  <section class="status-section" aria-labelledby="active-incidents-title">
+    <h2 id="active-incidents-title">{% trans "Active incident" %}</h2>
+    <div class="incident-list">
+      {% for incident in active_incidents %}
+        <article class="incident-card incident-card--active">
+          <div class="incident-card__top">
+            <div class="incident-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M3 12h4l2-5 4 10 2-5h6"></path>
+              </svg>
+            </div>
+            <div class="incident-card__content">
+              <div class="incident-card__header">
+                <h3>{{ incident.title }}</h3>
+                <div class="status-badges">
+                  <span class="status-badge status-badge--severity status-badge--{{ incident.severity }}">{{ incident.get_severity_display }}</span>
+                  <span class="status-badge status-badge--phase status-badge--phase-{{ incident.phase }}">{{ incident.get_phase_display }}</span>
+                </div>
+              </div>
+              <div class="incident-card__meta-row">
+                <p class="incident-meta">
+                  <span class="incident-meta__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M8 2v4M16 2v4M3 10h18"></path>
+                      <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                    </svg>
+                  </span>
+                  {% trans "Started" %} <time datetime="{{ incident.started_at|date:'c' }}" data-local-datetime="{{ incident.started_at|date:'c' }}" data-local-format="datetime">{{ incident.started_at|date:"j F Y" }} at {{ incident.started_at|date:"H:i" }}</time>
+                </p>
+                {% include "status/partials/_incident_services.html" %}
+              </div>
+            </div>
+          </div>
+          {% include "status/partials/_incident_timeline.html" %}
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

@@ -1,0 +1,61 @@
+{% load static i18n %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{{ status_page.title }} | {% trans "Status" %}</title>
+  <meta name="description" content="{{ status_meta_description }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ status_page.title }} | {% trans "Status" %}">
+  <meta property="og:description" content="{{ status_meta_description }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  {% if og_image_url %}
+    <meta property="og:image" content="{{ og_image_url }}">
+  {% endif %}
+  {% if favicon %}
+    <link rel="icon" href="{{ favicon.href }}" type="{{ favicon.type }}">
+  {% endif %}
+  <link rel="stylesheet" href="{% static 'status/status.css' %}">
+</head>
+<body class="status-body">
+  <a class="status-skip-link" href="#main-content">{% trans "Skip to content" %}</a>
+  <header class="status-header">
+    <div class="status-shell status-header__inner">
+      <a class="status-brand" href="{% if status_page.back_link_url %}{{ status_page.back_link_url }}{% else %}/{% endif %}">
+        {% if status_page.logo_url %}
+          <img class="status-brand__logo" src="{{ status_page.logo_url }}" alt="" width="72" height="72">
+        {% endif %}
+        <h1>{{ status_page.title }}</h1>
+      </a>
+      {% include "status/partials/_appearance_toggle.html" %}
+    </div>
+  </header>
+
+  <main id="main-content" class="status-main status-shell">
+    {% include "status/partials/_summary.html" %}
+    {% include "status/partials/_service_overview.html" %}
+    {% include "status/partials/_active_incidents.html" %}
+    {% include "status/partials/_service_list.html" %}
+    {% include "status/partials/_incident_history.html" %}
+    <a class="page-top-link" href="#main-content" aria-label="{% trans 'Back to top' %}" data-page-top-link>
+      <span class="page-top-link__icon" aria-hidden="true"></span>
+      <span class="sr-only">{% trans "Back to top" %}</span>
+    </a>
+  </main>
+
+  <footer class="status-footer status-shell">
+    <a class="status-footer__back-link" href="{% if status_page.back_link_url %}{{ status_page.back_link_url }}{% else %}/{% endif %}">
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M19 12H5"></path>
+        <path d="m12 19-7-7 7-7"></path>
+      </svg>
+      <span>{% if status_page.back_link_label %}{{ status_page.back_link_label }}{% else %}{% trans "Back to home" %}{% endif %}</span>
+    </a>
+  </footer>
+  <script src="{% static 'status/status.js' %}" defer></script>
+</body>
+</html>

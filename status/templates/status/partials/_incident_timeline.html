@@ -1,0 +1,21 @@
+{% load i18n %}
+{% if incident.updates.all %}
+  <details class="incident-timeline{% if timeline_compact %} incident-timeline--compact{% endif %}"{% if timeline_open or not timeline_compact %} open{% endif %}>
+    <summary>
+      {% if timeline_compact %}
+        <span class="sr-only">{% trans "Toggle timeline" %}</span>
+      {% else %}
+        {% trans "Timeline" %}
+      {% endif %}
+    </summary>
+    <ol>
+      {% for update in incident.updates.all %}
+        <li class="incident-timeline__item incident-timeline__item--{{ update.phase }}">
+          <time datetime="{{ update.published_at|date:'c' }}" data-local-datetime="{{ update.published_at|date:'c' }}" data-local-format="datetime">{{ update.published_at|date:"j F Y" }} at {{ update.published_at|date:"H:i" }}</time>
+          <span class="incident-timeline__phase incident-timeline__phase--{{ update.phase }}">{{ update.get_phase_display }}</span>
+          <p>{{ update.message }}</p>
+        </li>
+      {% endfor %}
+    </ol>
+  </details>
+{% endif %}

@@ -1,0 +1,27 @@
+{% load i18n %}
+<section class="status-summary" aria-labelledby="status-title">
+  <div>
+    <h2 id="status-title">{% trans "Status" %}</h2>
+    {% if status_page.description %}
+      <p class="status-description">{{ status_page.description }}</p>
+    {% endif %}
+  </div>
+
+  <div class="status-callout status-callout--{{ overall_status.state }}">
+    <div class="status-callout__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" focusable="false">
+        {% if overall_status.state == "operational" %}
+          <path d="M20 6 9 17l-5-5"></path>
+        {% else %}
+          <path d="M10.3 4.3 2.8 17.2A2 2 0 0 0 4.5 20h15a2 2 0 0 0 1.7-2.8L13.7 4.3a2 2 0 0 0-3.4 0Z"></path>
+          <path d="M12 9v4"></path>
+          <path d="M12 17h.01"></path>
+        {% endif %}
+      </svg>
+    </div>
+    <div>
+      <p class="status-callout__label">{{ overall_status.label }}</p>
+      <p>{{ overall_status.detail }}</p>
+    </div>
+  </div>
+</section>

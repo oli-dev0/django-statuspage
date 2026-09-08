@@ -1,0 +1,15 @@
+{% load i18n %}
+<p class="sr-only">{{ service.uptime_summary }}</p>
+<div class="uptime-bars" aria-hidden="true">
+  {% for bar in service.uptime_bars %}
+    <span
+      class="uptime-bar uptime-bar--{{ bar.state }}"
+      {% if bar.tooltip_body %}data-status-tooltip="{{ bar.tooltip_body }}" data-status-tooltip-text="{{ bar.label }}: {{ bar.tooltip_body }}"{% endif %}
+      {% if bar.date %}data-local-datetime="{{ bar.date|date:'Y-m-d' }}T00:00:00Z" data-local-format="date-title" data-status-state="{{ bar.state }}"{% endif %}
+    ></span>
+  {% endfor %}
+</div>
+<div class="uptime-bars__range" aria-hidden="true">
+  <span>{% trans "60 days ago" %}</span>
+  <span>{% trans "today" %}</span>
+</div>

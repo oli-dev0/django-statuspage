@@ -1,0 +1,24 @@
+{% load i18n %}
+<section class="status-section" aria-labelledby="services-title">
+  <h2 id="services-title">{% trans "Service history" %}</h2>
+  {% if service_statuses %}
+    <div class="service-list">
+      {% for service in service_statuses %}
+        <article class="service-card">
+          <div class="service-card__main">
+            <div class="service-card__heading">
+              <h3>{{ service.label }}</h3>
+              {% if service.page_service.monitor.description %}
+                <p>{{ service.page_service.monitor.description }}</p>
+              {% endif %}
+            </div>
+            <span class="service-state service-state--{{ service.state }}">{{ service.state_label }}</span>
+          </div>
+          {% include "status/partials/_uptime_bars.html" %}
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="status-empty">{% trans "No services are configured for this status page yet." %}</p>
+  {% endif %}
+</section>

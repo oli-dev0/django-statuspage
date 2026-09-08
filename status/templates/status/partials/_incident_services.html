@@ -1,0 +1,19 @@
+{% load i18n %}
+{% with services=incident.affected_services.all %}
+  {% if services %}
+    <p class="incident-services">
+      <span class="incident-meta__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+        </svg>
+      </span>
+      <strong>{% trans "Affected services" %}:</strong>
+      {% for service in services %}
+        {{ service.display_label }}{% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+  {% endif %}
+{% endwith %}

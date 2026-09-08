@@ -1,0 +1,19 @@
+{% load i18n %}
+<section class="status-section service-overview" aria-labelledby="service-overview-title">
+  <h2 id="service-overview-title">{% trans "Service overview" %}</h2>
+  {% if service_statuses %}
+    <div class="service-overview__grid">
+      {% for service in service_statuses %}
+        <article class="service-overview-card">
+          <span class="service-overview-card__dot service-overview-card__dot--{{ service.state }}" aria-hidden="true"></span>
+          <div class="service-overview-card__content">
+            <h3>{{ service.label }}</h3>
+            <p class="service-overview-card__state service-overview-card__state--{{ service.state }}">{{ service.state_label }}</p>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="status-empty">{% trans "No services are configured for this status page yet." %}</p>
+  {% endif %}
+</section>

@@ -1,0 +1,86 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block after_field_sets %}
+  {{ block.super }}
+  <fieldset class="module aligned">
+    <h2>{% trans "Kuma monitors on this page" %}</h2>
+    {% if monitor_selection_rows %}
+      <div class="form-row">
+        <div class="help">
+          {% trans "Choose which Kuma monitors appear on this status page, then adjust their public labels, order, and visibility." %}
+        </div>
+      </div>
+      <div class="results status-monitor-selection">
+        <table data-status-monitor-table>
+          <thead>
+            <tr>
+              <th scope="col">{% trans "Show" %}</th>
+              <th scope="col">{% trans "Order" %}</th>
+              <th scope="col">{% trans "Kuma monitor" %}</th>
+              <th scope="col">{% trans "Display name" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in monitor_selection_rows %}
+              <tr data-status-monitor-row>
+                <td>
+                  <input
+                    type="checkbox"
+                    name="{{ row.selected_field }}"
+                    id="id_{{ row.selected_field }}"
+                    {% if row.selected %}checked{% endif %}
+                  >
+                </td>
+                <td>
+                  <div class="status-monitor-order">
+                    <button
+                      type="button"
+                      class="status-monitor-order__control"
+                      data-status-monitor-move="up"
+                      aria-label="{% blocktrans with monitor=row.monitor.name %}Move {{ monitor }} up{% endblocktrans %}"
+                    >
+                      <span aria-hidden="true" class="status-monitor-order__arrow status-monitor-order__arrow--up"></span>
+                    </button>
+                    <button
+                      type="button"
+                      class="status-monitor-order__control"
+                      data-status-monitor-move="down"
+                      aria-label="{% blocktrans with monitor=row.monitor.name %}Move {{ monitor }} down{% endblocktrans %}"
+                    >
+                      <span aria-hidden="true" class="status-monitor-order__arrow status-monitor-order__arrow--down"></span>
+                    </button>
+                  </div>
+                  <input
+                    type="hidden"
+                    name="{{ row.position_field }}"
+                    value="{{ row.position }}"
+                    data-status-monitor-position
+                  >
+                </td>
+                <td>
+                  <label for="id_{{ row.selected_field }}">{{ row.monitor.name }}</label>
+                  {% if not row.is_available %}
+                    <span class="help">{% trans "Unavailable in Kuma" %}</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    name="{{ row.display_name_field }}"
+                    value="{{ row.display_name }}"
+                    placeholder="{{ row.monitor.name }}"
+                  >
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="form-row">
+        <div class="help">{% trans "Fetch or create Kuma monitors before selecting monitors for this page." %}</div>
+      </div>
+    {% endif %}
+  </fieldset>
+{% endblock %}

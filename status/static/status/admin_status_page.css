@@ -1,0 +1,74 @@
+.status-monitor-selection table {
+  width: 100%;
+}
+
+html[data-theme="light"] .status-monitor-selection tbody tr:nth-child(odd) td {
+  background: var(--admin-surface-raised, #f7fbff);
+}
+
+html[data-theme="light"] .status-monitor-selection tbody tr:nth-child(even) td {
+  background: var(--admin-surface, #fbfdff);
+}
+
+html[data-theme="dark"] .status-monitor-selection tbody tr:nth-child(odd) td {
+  background: var(--admin-surface-raised, #273235);
+}
+
+html[data-theme="dark"] .status-monitor-selection tbody tr:nth-child(even) td {
+  background: var(--admin-surface, #1a2225);
+}
+
+.status-monitor-order {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.status-monitor-order__control {
+  display: inline-grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  min-height: 1.65rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--admin-radius-md, 0.35rem);
+  background: transparent;
+  color: var(--admin-muted, currentColor);
+  cursor: pointer;
+  transition:
+    background-color 130ms var(--ease, ease),
+    color 130ms var(--ease, ease),
+    opacity 130ms var(--ease, ease);
+}
+
+.status-monitor-order__control:hover,
+.status-monitor-order__control:focus-visible {
+  background: var(--admin-nav-item-active-bg, rgba(255, 255, 255, 0.08));
+  color: var(--admin-text, currentColor);
+}
+
+.status-monitor-order__control:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.status-monitor-order__control:disabled:hover {
+  background: transparent;
+}
+
+.status-monitor-order__arrow {
+  display: block;
+  width: 0.52rem;
+  height: 0.52rem;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+}
+
+.status-monitor-order__arrow--up {
+  transform: translateY(0.12rem) rotate(-45deg);
+}
+
+.status-monitor-order__arrow--down {
+  transform: translateY(-0.12rem) rotate(135deg);
+}
